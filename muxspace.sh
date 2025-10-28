@@ -3,7 +3,24 @@ set -euo pipefail
 IFS=$'\n\t'
 
 source "$HOME/connect-coder/modules/select_coder_env.sh"
-select_environment
+
+SELECTED_CODER=""
+
+while getopts "a" opt; do
+	case ${opt} in
+	a)
+		SELECTED_CODER=$(tmux display-message -p '#S')
+		;;
+	\?)
+		echo "Invalid option: -$OPTARG" >&2
+		exit 1
+		;;
+	esac
+done
+
+if [ -z "$SELECTED_CODER" ]; then
+	select_environment
+fi
 
 echo "Workspace selected: $SELECTED_CODER"
 
