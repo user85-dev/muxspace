@@ -30,6 +30,13 @@ if ! tmux has-session -t "$SELECTED_CODER" 2>/dev/null; then
 	if ! tmux ls &>/dev/null; then
 		echo "No tmux server running, starting dummy session"
 		tmux new-session -d -s __dummy_session
+	else
+		if ! tmux has-session -t __dummy_session 2>/dev/null; then
+			echo "Tmux running, but no __dummy_session — starting it"
+			tmux new-session -d -s __dummy_session
+		else
+			echo "__dummy_session already exists"
+		fi
 	fi
 
 	tmux send-keys -t __dummy_session "bash $HOME/.tmux/plugins/tmux-resurrect/scripts/restore.sh" C-m
