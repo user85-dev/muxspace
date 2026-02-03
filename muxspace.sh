@@ -2,7 +2,7 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-source "$HOME/connect-coder/modules/select_coder_env.sh"
+source "$HOME/Documents/Programming/Workbench/connect-coder/modules/select_coder_env.sh"
 
 SELECTED_CODER=""
 
@@ -51,7 +51,7 @@ fi
 if ! tmux has-session -t "$SELECTED_CODER" 2>/dev/null; then
 	echo "Session still not found. Creating new session '$SELECTED_CODER'..."
 
-	WORKDIR="$HOME/workenv"
+	WORKDIR="$HOME/Documents/Programming/Workbench/workenv/"
 
 	tmux new-session -d -s "$SELECTED_CODER" -c "$WORKDIR" -n editor
 	tmux new-window -t "$SELECTED_CODER:" -n general -c "$WORKDIR"
